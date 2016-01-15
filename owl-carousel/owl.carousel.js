@@ -1003,7 +1003,7 @@ if (typeof Object.create !== "function") {
                     handlers,
                     owlStopEvent;
 
-                ev.target = ev.target || ev.srcElement;
+                var evTarget = ev.target || ev.srcElement;
 
                 locals.dragging = false;
 
@@ -1020,14 +1020,14 @@ if (typeof Object.create !== "function") {
                 if (base.newRelativeX !== 0) {
                     newPosition = base.getNewPosition();
                     base.goTo(newPosition, false, "drag");
-                    if (locals.targetElement === ev.target && base.browser.isTouch !== true) {
-                        $(ev.target).on("click.disable", function (ev) {
+                    if (locals.targetElement === evTarget && base.browser.isTouch !== true) {
+                        $(evTarget).on("click.disable", function (ev) {
                             ev.stopImmediatePropagation();
                             ev.stopPropagation();
                             ev.preventDefault();
-                            $(ev.target).off("click.disable");
+                            $(evTarget).off("click.disable");
                         });
-                        handlers = $._data(ev.target, "events").click;
+                        handlers = $._data(evTarget, "events").click;
                         owlStopEvent = handlers.pop();
                         handlers.splice(0, 0, owlStopEvent);
                     }
